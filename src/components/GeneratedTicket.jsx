@@ -1,5 +1,5 @@
- 
 import React, { useState, useEffect } from "react";
+import ProgressBar from "./ProgressBar";
 
 const GeneratedTicket = ({ ticketData, onReset }) => {
   const [barcodeId, setBarcodeId] = useState("");
@@ -17,6 +17,11 @@ const GeneratedTicket = ({ ticketData, onReset }) => {
 
   return (
     <div className="w-full max-w-md mx-auto bg-[#031E21]/80 backdrop-blur-sm p-6 shadow-lg border-1 border-[#0E464F] rounded-[32px]">
+      {/* Header with Progress */}
+      <div className="mb-8 block md:hidden">
+        <ProgressBar step={3} title={"Ready"} />
+      </div>
+
       {/* Header   */}
       <div className="mb-2">
         <h2 className="text-white text-xl   text-center">
@@ -29,6 +34,7 @@ const GeneratedTicket = ({ ticketData, onReset }) => {
       </p>
 
       {/* Ticket Card */}
+      {/* <div className="bg-[#031E21]/10 rounded-[16px] border-1 border-[#0E464F]  mb-8"> */}
       <div className="bg-[#031E21]/10 rounded-[16px] border-1 border-[#0E464F]  mb-8">
         {/* Main Ticket Content */}
         <div className="p-6">
@@ -62,35 +68,35 @@ const GeneratedTicket = ({ ticketData, onReset }) => {
             </div>
 
             {/* Attendee Details */}
-            <div className="w-full grid grid-cols-2 gap-4 border-1 rounded-[8px]  bg-[#08343C]/50 border-[#08343C] p-4">
-              <div className="text-start">
-                <p className="text-gray-400 text-sm mb-1">Enter your name</p>
+            <div className="w-full grid grid-cols-2 gap-0 border-x-1  rounded-tl-[8px] rounded-tr-[8px]  bg-[#08343C]/50 border-[#08343C] p-4">
+              <div className="text-start border-r-1 pb-4 border-b-1 border-[#12464E]">
+                <p className="text-gray-400 text-sm mb-1 ">Enter your name</p>
                 <p className="text-white">
                   {ticketData?.fullName || "Guest User"}
                 </p>
               </div>
-              <div className="text-start">
+              <div className="text-start pl-4 pb-4  border-b-1 border-[#12464E]">
                 <p className="text-gray-400 text-sm mb-1">Enter your email</p>
                 <p className="text-white break-all">
                   {ticketData?.email || "user@email.com"}
                 </p>
               </div>
-              <div className="text-start">
-                <p className="text-gray-400 text-sm mb-1">Ticket Type</p>
+              <div className="text-start border-r-1 pb-4 pt-4  border-b-1 border-[#12464E] ">
+                <p className="text-gray-400 text-sm mb-1 ">Ticket Type</p>
                 <p className="text-white">
                   {ticketData?.ticketType?.replace(/_/g, " ") || "VIP"}
                 </p>
               </div>
-              <div className="text-start">
+              <div className="text-start pl-4 pt-4 pb-4 border-b-1 border-[#12464E]">
                 <p className="text-gray-400 text-sm mb-1">Ticket for</p>
-                <p className="text-white">1</p>
+                <p className="text-white">{ticketData?.quantity || 1}</p>
               </div>
             </div>
 
             {/* Special Request */}
-            <div className="w-full mt-6 text-left   border-1 rounded-[8px] bg-[#08343C]/50   border-[#08343C] p-4 ">
+            <div className="w-full  text-start  border-l-1 border-r-1 border-b-1 rounded-br-[8px] rounded-bl-[8px] bg-[#08343C]/50   border-[#08343C] pl-4 pr-4 pb-4 ">
               <p className="text-gray-400 text-sm mb-1">Special request?</p>
-              <p className="text-white text-sm">
+              <p className="text-white text-sm   ">
                 {ticketData?.message || "Nil"}
               </p>
             </div>

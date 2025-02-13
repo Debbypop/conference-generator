@@ -159,7 +159,7 @@ const AttendeeDetails = ({ ticketType, onPrevStep, onNextStep }) => {
           <label className="block text-sm text-white mb-2">
             Enter your email <span className="text-white-500">*</span>
           </label>
-          <div className="flex items-center w-full p-3 bg-[#183238]/50 rounded-xl border border-[#24A0B5]/30 focus-within:border-[#24A0B5]">
+          <div className="flex items-center w-full p-3 bg-[#183238]/50 rounded-xl border border-[#24A0B5]/30 focus:outline-none focus-within:border-[#24A0B5]">
             <MdOutlineEmail className="text-gray-400 w-5 h-5" />
             <input
               name="email"
