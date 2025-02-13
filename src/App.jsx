@@ -1,35 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import Navbar from "./components/NavBar";
 
-function App() {
-  const [count, setCount] = useState(0)
+import TicketSelection from "./components/TicketSelection";
+import AttendeeDetails from "./components/AtendeeDetails";
+import GeneratedTicket from "./components/GeneratedTicket";
+
+const App = () => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [ticketType, setTicketType] = useState(null);
+  const [ticketData, setTicketData] = useState(null);
+  const [ticketQuantity, setTicketQuantity] = useState(null);
+
+  const handleTicketSelection = (selectedType,quantity) => {
+    setTicketType(selectedType);
+    setTicketQuantity(quantity)
+    setCurrentStep(2);
+  };
+
+  const handleAttendeeSubmission = (formData) => {
+    setTicketData({
+      ...formData,
+      quantity: ticketQuantity,
+    });
+    setCurrentStep(3);
+  };
+
+  const handleReset = () => {
+    setCurrentStep(1);
+    setTicketType(null);
+    setTicketData(null);
+    localStorage.removeItem("ticketFormData");
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="min-h-screen bg-[#0A1A1E]">
+      {/* Navbar */}
+      <Navbar />
 
-export default App
+      {/* Content Wrapper */}
+      <main className="container mx-auto pt-24 px-4">
+        <div className="flex justify-center items-center min-h-[calc(100vh-96px)]">
+          {/* Conditional rendering of components */}
+          {currentStep === 1 && (
+            <TicketSelection onNextStep={handleTicketSelection} />
+          )}
+          {currentStep === 2 && (
+            <AttendeeDetails
+              ticketType={ticketType}
+              onPrevStep={() => setCurrentStep(1)}
+              onNextStep={handleAttendeeSubmission}
+            />
+          )}
+          {currentStep === 3 && (
+            <GeneratedTicket ticketData={ticketData} onReset={handleReset} />
+          )}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default App;
